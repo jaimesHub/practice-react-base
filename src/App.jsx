@@ -9,7 +9,8 @@ import BookPage from "./pages/book";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
-import Register from "./pages/register";
+import RegisterPage from "./pages/register";
+
 
 const Layout = () => {
   return (
@@ -47,7 +48,7 @@ export default function App() {
     },
     {
       path: "/register",
-      element: <Register />
+      element: <RegisterPage />
     }
   ]);
 
