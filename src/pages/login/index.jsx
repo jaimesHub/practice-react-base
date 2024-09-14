@@ -6,31 +6,28 @@ import { callLogin } from "../../services/api";
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    const [form] = Form.useForm();
-
     const [isSubmit, setIsSubmit] = useState(false);
 
+    // const [form] = Form.useForm();
+
+
     const onFinish = async (values) => {
-        // console.log('Success:', values);
+        const { username, password } = values;
         setIsSubmit(true);
-        const { username, password } = values
         const res = await callLogin(username, password);
+        setIsSubmit(false);
 
         if (res?.data) {
-            message.success({
-                content: "Đăng nhập thành công!",
-                duration: 5,
-            });
-
+            message.success('Đăng nhập tài khoản thành công!');
             navigate("/");
         } else {
             notification.error({
-                message: res.error,
-                description: res.message,
+                message: "Có lỗi xảy ra",
+                description:
+                    res.message && Array.isArray(res.message) ? res.message[0] : res.message,
+                duration: 5
             });
         }
-
-        setIsSubmit(false);
     };
 
     return (
