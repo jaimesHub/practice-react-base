@@ -1,10 +1,36 @@
-import { Button, Divider, Form, Input } from "antd";
-import { Link } from "react-router-dom";
+import { Button, Divider, Form, Input, message, notification } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import "./login.scss";
+import { useState } from "react";
+import { callLogin } from "../../services/api";
 
 const LoginPage = () => {
-    const onFinish = (values) => {
-        console.log('Success:', values);
+    const navigate = useNavigate();
+    const [form] = Form.useForm();
+
+    const [isSubmit, setIsSubmit] = useState(false);
+
+    const onFinish = async (values) => {
+        // console.log('Success:', values);
+        setIsSubmit(true);
+        const { username, password } = values
+        const res = await callLogin(username, password);
+
+        if (res?.data) {
+            message.success({
+                content: "Đăng nhập thành công!",
+                duration: 5,
+            });
+
+            navigate("/");
+        } else {
+            notification.error({
+                message: res.error,
+                description: res.message,
+            });
+        }
+
+        setIsSubmit(false);
     };
 
     return (
@@ -27,7 +53,7 @@ const LoginPage = () => {
                                 <Form.Item
                                     labelCol={{ span: 24 }} //whole column
                                     label="Email"
-                                    name="email"
+                                    name="username"
                                     rules={[{ required: true, message: 'Email không được để trống!' }]}
                                 >
                                     <Input />
@@ -45,7 +71,7 @@ const LoginPage = () => {
                                 <Form.Item
                                 // wrapperCol={{ offset: 6, span: 16 }}
                                 >
-                                    <Button type="primary" htmlType="submit" loading={true}>
+                                    <Button type="primary" htmlType="submit" loading={isSubmit}>
                                         Đăng nhập
                                     </Button>
                                 </Form.Item>

@@ -15,12 +15,8 @@ const RegisterPage = () => {
         const { fullName, email, password, phone } = values;
 
         setIsSubmit(true);
-
         const res = await callRegister(fullName, email, password, phone);
-
         setIsSubmit(false);
-
-        console.log(">>> res: ", res);
 
         if (res?.data?._id) {
             message.success('Đăng ký tài khoản thành công!');
@@ -29,12 +25,10 @@ const RegisterPage = () => {
             notification.error({
                 message: "Có lỗi xảy ra",
                 description:
-                    res.message && res.message.length > 0 ? res.message : res.message,
+                    res.message && res.message.length > 0 ? res.message[0] : res.message,
                 duration: 5
             });
         }
-
-
     };
 
     return (

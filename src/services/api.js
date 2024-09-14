@@ -11,6 +11,16 @@ const callRegister = (fullName, email, password, phone) => {
     return axios.post(URL_BACKEND, data);
 }
 
+const callLogin = (username, password) => {
+    const URL_BACKEND = "/api/v1/auth/login";
+    const data = {
+        username,
+        password,
+    }
+    return axios.post(URL_BACKEND, data);
+}
+
 export {
     callRegister,
+    callLogin
 }
