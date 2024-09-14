@@ -1,6 +1,6 @@
 import axios from "../utils/axios-customize";
 
-const registerAPI = (fullName, email, password, phone) => {
+const callRegister = (fullName, email, password, phone) => {
     const URL_BACKEND = "/api/v1/user/register";
     const data = {
         fullName,
@@ -12,5 +12,5 @@ const registerAPI = (fullName, email, password, phone) => {
 }
 
 export {
-    registerAPI
+    callRegister,
 }

@@ -1,41 +1,40 @@
-import { Button, Divider, Form, Input, notification } from 'antd';
+import { Button, Divider, Form, Input, message, notification } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import './register.scss';
 import { useState } from 'react';
-import { registerAPI } from '../../services/api.service';
+import { callRegister } from '../../services/api';
 
 const RegisterPage = () => {
-    const [form] = Form.useForm();
     const navigate = useNavigate();
+    const [isSubmit, setIsSubmit] = useState(false);
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [form] = Form.useForm();
+
 
     const onFinish = async (values) => {
-        setIsLoading(true);
-
         const { fullName, email, password, phone } = values;
 
-        const res = await registerAPI(fullName, email, password, phone);
+        setIsSubmit(true);
 
-        if (res.data) {
-            notification.success({
-                message: "Successfully!",
-                description: "Đăng ký tài khoản thành công!"
-            });
+        const res = await callRegister(fullName, email, password, phone);
 
-            form.resetFields();
+        setIsSubmit(false);
 
-            setIsLoading(false);
+        console.log(">>> res: ", res);
 
-            navigate("/login");
+        if (res?.data?._id) {
+            message.success('Đăng ký tài khoản thành công!');
+            navigate('/login');
         } else {
             notification.error({
-                message: "Failure!",
-                description: `Đăng ký tài khoản thất bại: ${JSON.stringify(res)}`
+                message: "Có lỗi xảy ra",
+                description:
+                    res.message && res.message.length > 0 ? res.message : res.message,
+                duration: 5
             });
         }
 
-        setIsLoading(false);
+
     };
 
     return (
@@ -95,8 +94,7 @@ const RegisterPage = () => {
                                 <Button
                                     type="primary"
                                     htmlType="submit"
-                                    loading={isLoading}
-                                    onClick={() => form.submit()}
+                                    loading={isSubmit}
                                 >
                                     Đăng ký
                                 </Button>
