@@ -1,13 +1,42 @@
-import { Button, Divider, Form, Input } from 'antd';
-import { Link } from 'react-router-dom';
+import { Button, Divider, Form, Input, notification } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
 import './register.scss';
+import { useState } from 'react';
+import { registerAPI } from '../../services/api.service';
 
 const RegisterPage = () => {
+    const [form] = Form.useForm();
+    const navigate = useNavigate();
 
-    const onFinish = (values) => {
-        console.log('Success:', values);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const onFinish = async (values) => {
+        setIsLoading(true);
+
+        const { fullName, email, password, phone } = values;
+
+        const res = await registerAPI(fullName, email, password, phone);
+
+        if (res.data) {
+            notification.success({
+                message: "Successfully!",
+                description: "Đăng ký tài khoản thành công!"
+            });
+
+            form.resetFields();
+
+            setIsLoading(false);
+
+            navigate("/login");
+        } else {
+            notification.error({
+                message: "Failure!",
+                description: `Đăng ký tài khoản thất bại: ${JSON.stringify(res)}`
+            });
+        }
+
+        setIsLoading(false);
     };
-
 
     return (
         <div className="register-page">
@@ -17,13 +46,13 @@ const RegisterPage = () => {
                         <div className="heading">
                             <h2 className="text text-large">Đăng Ký Tài Khoản</h2>
                             <Divider />
-
                         </div>
+
                         <Form
                             name="basic"
-                            // style={{ maxWidth: 600, margin: '0 auto' }}
                             onFinish={onFinish}
                             autoComplete="off"
+                            form={form}
                         >
                             <Form.Item
                                 labelCol={{ span: 24 }} //whole column
@@ -34,9 +63,8 @@ const RegisterPage = () => {
                                 <Input />
                             </Form.Item>
 
-
                             <Form.Item
-                                labelCol={{ span: 24 }} //whole column
+                                labelCol={{ span: 24 }}
                                 label="Email"
                                 name="email"
                                 rules={[{ required: true, message: 'Email không được để trống!' }]}
@@ -45,7 +73,7 @@ const RegisterPage = () => {
                             </Form.Item>
 
                             <Form.Item
-                                labelCol={{ span: 24 }} //whole column
+                                labelCol={{ span: 24 }}
                                 label="Mật khẩu"
                                 name="password"
                                 rules={[{ required: true, message: 'Mật khẩu không được để trống!' }]}
@@ -53,7 +81,7 @@ const RegisterPage = () => {
                                 <Input.Password />
                             </Form.Item>
                             <Form.Item
-                                labelCol={{ span: 24 }} //whole column
+                                labelCol={{ span: 24 }}
                                 label="Số điện thoại"
                                 name="phone"
                                 rules={[{ required: true, message: 'Số điện thoại không được để trống!' }]}
@@ -62,9 +90,14 @@ const RegisterPage = () => {
                             </Form.Item>
 
                             <Form.Item
-                            // wrapperCol={{ offset: 6, span: 16 }}
+                                wrapperCol={{ offset: 10, span: 12 }}
                             >
-                                <Button type="primary" htmlType="submit" loading={true}>
+                                <Button
+                                    type="primary"
+                                    htmlType="submit"
+                                    loading={isLoading}
+                                    onClick={() => form.submit()}
+                                >
                                     Đăng ký
                                 </Button>
                             </Form.Item>
