@@ -8,9 +8,6 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const [isSubmit, setIsSubmit] = useState(false);
 
-    // const [form] = Form.useForm();
-
-
     const onFinish = async (values) => {
         const { username, password } = values;
         setIsSubmit(true);
@@ -18,7 +15,11 @@ const LoginPage = () => {
         setIsSubmit(false);
 
         if (res?.data) {
+            // save access_token into local storage
+            localStorage.setItem("access_token", res.data.access_token);
+
             message.success('Đăng nhập tài khoản thành công!');
+
             navigate("/");
         } else {
             notification.error({

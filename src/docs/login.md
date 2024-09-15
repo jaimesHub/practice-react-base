@@ -1,0 +1,14 @@
+# Login notes
+
+- Steps
+    - Design Login Form
+    - Create service to call Login API
+    - Handling event while login
+- Handling
+    - access_token saved in local storage
+        - alive time is short (10mins, 20mins, 1h)
+    - refresh_token saved in cookie
+        - HttpOnly = true (only server can use)
+        - alive time is long
+    - client will save `access_token`, `refresh_token`
+    - rest things will be handled by server

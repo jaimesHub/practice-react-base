@@ -5,6 +5,7 @@ const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 const instance = axios.create({
     baseURL: baseURL,
+    withCredentials: true, // for saving refresh_token into cookies
 });
 
 // ===== Adding INTERCEPTOR ===== //

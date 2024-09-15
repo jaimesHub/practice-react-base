@@ -16,3 +16,5 @@
     - labelCol={{ span: 24 }} //whole column
 - `Button` Props
     - loading=True
+    
+- Interceptor for request/response using Axios
