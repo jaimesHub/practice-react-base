@@ -12,3 +12,16 @@
         - alive time is long
     - client will save `access_token`, `refresh_token`
     - rest things will be handled by server
+- Store Logged In Users with Redux Toolkit
+    - context api (it dung)
+    - redux (dung nhieu)
+- Redux Tool Kit
+    - slice
+        - gộp 2 file làm 1 (action & reducer)
+    - steps
+        - accountSlice
+        - store user info to redux
+- `Pure` Redux
+    - reduce
+        - action file 
+        - reducer file 
