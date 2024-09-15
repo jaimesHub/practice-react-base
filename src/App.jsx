@@ -12,6 +12,8 @@ import Home from "./components/Home";
 import RegisterPage from "./pages/register";
 import { callFetchAccount } from "./services/api";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { doGetAccountAction } from "./redux/account/accountSlice";
 
 
 const Layout = () => {
@@ -27,11 +29,13 @@ const Layout = () => {
 }
 
 export default function App() {
+  const dispatch = useDispatch();
+
   const getAccount = async () => {
     const res = await callFetchAccount();
 
     if (res && res.data) {
-      console.log(">>> res", res);
+      dispatch(doGetAccountAction(res.data));
     }
   }
 

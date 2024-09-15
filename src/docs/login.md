@@ -21,6 +21,8 @@
     - steps
         - accountSlice
         - store user info to redux
+        - handling get user info after F5
+        - save data and save into redux
 - `Pure` Redux
     - reduce
         - action file 
