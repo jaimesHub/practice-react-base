@@ -8,6 +8,9 @@ const instance = axios.create({
     withCredentials: true, // for saving refresh_token into cookies
 });
 
+const access_token = localStorage.getItem("access_token");
+instance.defaults.headers.common = { "Authorization": `Bearer ${access_token}` }
+
 // ===== Adding INTERCEPTOR ===== //
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {

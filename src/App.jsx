@@ -10,6 +10,8 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
 import RegisterPage from "./pages/register";
+import { callFetchAccount } from "./services/api";
+import { useEffect } from "react";
 
 
 const Layout = () => {
@@ -25,6 +27,19 @@ const Layout = () => {
 }
 
 export default function App() {
+  const getAccount = async () => {
+    const res = await callFetchAccount();
+
+    if (res && res.data) {
+      console.log(">>> res", res);
+    }
+  }
+
+  // each F5, FE will call getAccount()
+  useEffect(() => {
+    getAccount();
+  }, []);
+
   const router = createBrowserRouter([
     {
       path: "/",

@@ -25,3 +25,4 @@
     - reduce
         - action file 
         - reducer file 
+- Cơ chế dùng token để xác thực user là ai --> stateless

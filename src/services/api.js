@@ -20,7 +20,13 @@ const callLogin = (username, password) => {
     return axios.post(URL_BACKEND, data);
 }
 
+const callFetchAccount = () => {
+    const URL_BACKEND = "/api/v1/auth/account";
+    return axios.get(URL_BACKEND);
+}
+
 export {
     callRegister,
-    callLogin
+    callLogin,
+    callFetchAccount,
 }
