@@ -17,6 +17,7 @@ import { doGetAccountAction } from "./redux/account/accountSlice";
 import Loading from "./components/Loading";
 import AdminPage from "./pages/admin";
 import NotFound from "./components/NotFound";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 
 const Layout = () => {
@@ -36,6 +37,8 @@ export default function App() {
   const isAuthenticated = useSelector(state => state.account.isAuthenticated);
 
   const getAccount = async () => {
+    if (window.location.pathname === "/login" ||
+      window.location.pathname === "/admin") return;
     const res = await callFetchAccount();
 
     if (res && res.data) {
@@ -63,10 +66,29 @@ export default function App() {
           path: "book",
           element: <BookPage />
         },
+      ]
+    },
+    {
+      path: "/admin",
+      element: <Layout />,
+      errorElement: <NotFound />,
+      children: [
         {
-          path: "admin",
-          element: <AdminPage />
-        }
+          index: true,
+          element: (
+            <ProtectedRoute>
+              <AdminPage />
+            </ProtectedRoute>
+          )
+        },
+        {
+          path: "user",
+          element: <Contact />
+        },
+        {
+          path: "book",
+          element: <BookPage />
+        },
       ]
     },
     {
@@ -81,7 +103,9 @@ export default function App() {
 
   return (
     <>
-      {isAuthenticated || window.location.pathname === "/login" ?
+      {isAuthenticated ||
+        window.location.pathname === "/login" ||
+        window.location.pathname === "/admin" ?
         <RouterProvider router={router} /> :
         <Loading />
       }

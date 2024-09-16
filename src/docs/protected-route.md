@@ -6,3 +6,5 @@
 - Display
     - If un-authenticated user then display Loading component
     - If authenticated user then display normally
+- Design Admin Page & Not Found Component
+- Only authenticated user can navigate on Admin page
