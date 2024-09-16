@@ -28,3 +28,11 @@
         - action file 
         - reducer file 
 - Cơ chế dùng token để xác thực user là ai --> stateless
+- Summary
+    - Nạp thông tin user vào Redux
+    - (App.jsx) Mỗi lần F5, sẽ gọi API để fetch lại thông tin user -> save lại vào Redux
+    - (login.jsx) Sau khi login thành công, save thông tin user vào Redux
+    - (store.js) Khai báo accountReducer
+    - (accountSlice.js) Tạo accountSlice => tạo 2 action: doLoginAction, doGetAccountAction
+    - (api.js) tạo callFetchAccount API
+    - (axios-customize.js) Cấu hình Bearer + Token (Token lấy từ local storage)
