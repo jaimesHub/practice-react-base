@@ -1,14 +1,18 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import RoleBaseRoute from "./RoleBase";
 
 const ProtectedRoute = (props) => {
     const isAuthenticated = useSelector(state => state.account.isAuthenticated);
-    console.log(">>> isAuthenticated: ", isAuthenticated);
 
     return (
         <>
             {isAuthenticated === true ?
-                <>{props.children}</>
+                <>
+                    <RoleBaseRoute>
+                        {props.children}
+                    </RoleBaseRoute>
+                </>
                 :
                 <Navigate to='/login' replace />
             }

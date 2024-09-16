@@ -18,6 +18,7 @@ import Loading from "./components/Loading";
 import AdminPage from "./pages/admin";
 import NotFound from "./components/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { message } from "antd";
 
 
 const Layout = () => {
@@ -40,9 +41,9 @@ const LayoutAdmin = () => {
   return (
     <>
       <div className="layout-app">
-        <Header />
+        {isAdminRoute && userRole === "ADMIN" && <Header />}
         <Outlet />
-        <Footer />
+        {isAdminRoute && userRole === "ADMIN" && <Footer />}
       </div>
     </>
   );
@@ -50,6 +51,7 @@ const LayoutAdmin = () => {
 
 export default function App() {
   const dispatch = useDispatch();
+
   const isAuthenticated = useSelector(state => state.account.isAuthenticated);
 
   const getAccount = async () => {
@@ -60,8 +62,12 @@ export default function App() {
 
     const res = await callFetchAccount();
 
+    console.log(">>> res: ", res);
+
     if (res && res.data) {
       dispatch(doGetAccountAction(res.data));
+    } else {
+      message.error("You need to login first");
     }
   }
 
