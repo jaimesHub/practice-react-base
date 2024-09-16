@@ -15,6 +15,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { doGetAccountAction } from "./redux/account/accountSlice";
 import Loading from "./components/Loading";
+import AdminPage from "./pages/admin";
+import NotFound from "./components/NotFound";
 
 
 const Layout = () => {
@@ -50,7 +52,7 @@ export default function App() {
     {
       path: "/",
       element: <Layout />,
-      errorElement: <div>404 Not Found</div>,
+      errorElement: <NotFound />,
       children: [
         { index: true, element: <Home /> },
         {
@@ -60,6 +62,10 @@ export default function App() {
         {
           path: "book",
           element: <BookPage />
+        },
+        {
+          path: "admin",
+          element: <AdminPage />
         }
       ]
     },
