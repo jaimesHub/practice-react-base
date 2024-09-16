@@ -12,8 +12,9 @@ import Home from "./components/Home";
 import RegisterPage from "./pages/register";
 import { callFetchAccount } from "./services/api";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { doGetAccountAction } from "./redux/account/accountSlice";
+import Loading from "./components/Loading";
 
 
 const Layout = () => {
@@ -30,6 +31,7 @@ const Layout = () => {
 
 export default function App() {
   const dispatch = useDispatch();
+  const isAuthenticated = useSelector(state => state.account.isAuthenticated);
 
   const getAccount = async () => {
     const res = await callFetchAccount();
@@ -73,7 +75,10 @@ export default function App() {
 
   return (
     <>
-      <RouterProvider router={router} />
+      {isAuthenticated || window.location.pathname === "/login" ?
+        <RouterProvider router={router} /> :
+        <Loading />
+      }
     </>
   );
 };
