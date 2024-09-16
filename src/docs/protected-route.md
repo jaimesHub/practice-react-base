@@ -8,3 +8,7 @@
     - If authenticated user then display normally
 - Design Admin Page & Not Found Component
 - Only authenticated user can navigate on Admin page
+- Summary
+    - react-spinner
+    - NotFound, AdminPage, Loading, ProtectedRoute components
+    - Checking is User authenticated ?

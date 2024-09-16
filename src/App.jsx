@@ -104,6 +104,7 @@ export default function App() {
   return (
     <>
       {isAuthenticated ||
+        window.location.pathname === "/" ||
         window.location.pathname === "/login" ||
         window.location.pathname === "/admin" ?
         <RouterProvider router={router} /> :
