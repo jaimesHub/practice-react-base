@@ -2,3 +2,5 @@
 - RoleBaseRoute component
     - Admin
     - Normal user
+- LayoutAdmin
+- NotPermitted
