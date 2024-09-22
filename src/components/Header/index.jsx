@@ -1,26 +1,45 @@
 import "./header.scss";
-import { Badge, Divider, Drawer, Dropdown, Space } from "antd";
+import { Badge, Divider, Drawer, Dropdown, message, Space } from "antd";
 import { FaReact } from "react-icons/fa";
 import { VscSearchFuzzy } from "react-icons/vsc";
 import { FiShoppingCart } from "react-icons/fi";
 import { DownOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { callLogout } from "../../services/api";
+import { doLogoutAction } from "../../redux/account/accountSlice";
 
 const Header = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
     const isAuthenticated = useSelector((state) => state.account.isAuthenticated);
     const user = useSelector(state => state.account.user);
+
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleLogout = async () => {
+        const res = await callLogout();
+        if (res && res.data) {
+            dispatch(doLogoutAction());
+            message.success("Đăng xuất thành công");
+            navigate("/");
+        }
+    }
 
     const items = [
         {
-            label: <label>Quản lý tài khoản</label>,
+            label:
+                <label style={{ cursor: "pointer" }}>
+                    Quản lý tài khoản
+                </label>,
             key: 'account',
         },
         {
-            label: <label >Đăng xuất</label>,
+            label: <label
+                style={{ cursor: "pointer" }}
+                onClick={() => handleLogout()}
+            >Đăng xuất</label>,
             key: 'logout',
         },
 
@@ -59,7 +78,7 @@ const Header = () => {
                             <li className="navigation__item mobile"><Divider type='vertical' /></li>
                             <li className="navigation__item mobile">
                                 {!isAuthenticated ?
-                                    <span onClick={() => navigate('/login')}> Tài Khoản</span>
+                                    <span onClick={() => navigate('/login')}>Đăng nhập</span>
                                     :
                                     <Dropdown menu={{ items }} trigger={['click']}>
                                         <a onClick={(e) => e.preventDefault()}>
