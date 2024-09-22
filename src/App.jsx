@@ -19,6 +19,7 @@ import AdminPage from "./pages/admin";
 import NotFound from "./components/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { message } from "antd";
+import './styles/reset.scss';
 
 
 const Layout = () => {
