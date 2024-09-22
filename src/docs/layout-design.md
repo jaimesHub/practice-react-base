@@ -10,5 +10,5 @@
 - Admin page
     - Antd menu
 - Header design (1) [x]
-- Footer design (2)
+- Footer design (2) [x]
 - LayoutAdmin (3)

@@ -1,9 +1,11 @@
+import "./footer.scss";
+
 const Footer = () => {
     return (
         <>
-            <br />
-            <div>Footer</div>
-            <br />
+            <footer>
+                <div>Practice ReactJS &copy;2024 by James</div>
+            </footer>
         </>
     );
 }
