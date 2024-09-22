@@ -112,7 +112,7 @@ export default function App() {
   return (
     <>
       {
-        !isLoading ||
+        !isLoading || //
           window.location.pathname === "/" ||
           window.location.pathname === "/login" ||
           window.location.pathname === "/register" ?
