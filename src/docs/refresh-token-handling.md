@@ -21,8 +21,11 @@
     - Viết 1 cơ chế cho axios để gọi luôn API và sử dụng refresh_token 
     - Cơ chế `retry`
         - Ko cần cài package: https://www.npmjs.com/package/axios-retry
-        - retry on 401: https://github.com/axios/axios/issues/934
-        - https://stackoverflow.com/questions/73363862/axios-retry-infinite-loop 
+        - retry on 401: https://github.com/axios/axios/issues/934 
 - Problem
     - Sau khi dùng refresh token để authenticate lại, vẫn k thể hiện tên user 
     - Do ko nạp vào redux sau khi sd refresh token
+    - Trong thực tế, `handleRefreshToken` có thể trả về 401 --> loop vô hạn 
+        - https://stackoverflow.com/questions/73363862/axios-retry-infinite-loop
+        - Solution: đặt 1 flag --> đánh dấu đã retry rồi lần sau ko retry nữa 
+        - `const NO_RETRY_HEADER = 'x-no-retry'`

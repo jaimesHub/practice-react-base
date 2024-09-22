@@ -18,6 +18,8 @@ const handleRefreshToken = async () => {
     return null;
 }
 
+const NO_RETRY_HEADER = "x-no-retry";
+
 const access_token = localStorage.getItem("access_token");
 instance.defaults.headers.common = { "Authorization": `Bearer ${access_token}` }
 
@@ -37,23 +39,20 @@ instance.interceptors.response.use(function (response) {
     // Do something with response data
     return response && response.data ? response.data : response; // customize response while success
 }, async function (error) {
-    // console.log(">>> error: ", error);
-    if (error.config && error.response && +error.response.status === 401) {
-        // return updateToken().then((token) => {
-        //   error.config.headers.xxxx <= set the token
-        //   return axios.request(config);
-        // });
-
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // Do something with response error
+    if (error.config && error.response &&
+        +error.response.status === 401 &&
+        !error.config.headers[NO_RETRY_HEADER] // this flag to avoid axios retry infinity-loop
+    ) {
         const access_token = await handleRefreshToken();
-        // console.log(">>> access_token: ", access_token)
+        error.config.headers[NO_RETRY_HEADER] = "true";
         if (access_token) {
             error.config.headers["Authorization"] = `Bearer ${access_token}`;
             localStorage.setItem("access_token", access_token);
-            return axios.request(error.config);
+            return instance.request(error.config);
         }
     }
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
     return error?.response?.data ?? Promise.reject(error); // customize response while error
 });
 
