@@ -113,7 +113,7 @@ const LayoutAdmin = () => {
                         <Outlet />
                     </Content>
                     <Footer style={{ padding: 0 }}>
-                        &copy; James & 2024. Made with <HeartTwoTone />
+                        Practice ReactJS &copy;James@2024. Made with <HeartTwoTone />
                     </Footer>
                 </Layout>
             </Layout>
