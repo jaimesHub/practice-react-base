@@ -9,3 +9,6 @@
     - Responsive
 - Admin page
     - Antd menu
+- Header design (1) [x]
+- Footer design (2)
+- LayoutAdmin (3)
