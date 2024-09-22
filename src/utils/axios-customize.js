@@ -46,8 +46,11 @@ instance.interceptors.response.use(function (response) {
 
         const access_token = await handleRefreshToken();
         // console.log(">>> access_token: ", access_token)
-        error.config.headers["Authorization"] = `Bearer ${access_token}`;
-        return axios.request(error.config);
+        if (access_token) {
+            error.config.headers["Authorization"] = `Bearer ${access_token}`;
+            localStorage.setItem("access_token", access_token);
+            return axios.request(error.config);
+        }
     }
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error

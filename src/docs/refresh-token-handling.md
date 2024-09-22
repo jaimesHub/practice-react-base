@@ -23,3 +23,6 @@
         - Ko cần cài package: https://www.npmjs.com/package/axios-retry
         - retry on 401: https://github.com/axios/axios/issues/934
         - https://stackoverflow.com/questions/73363862/axios-retry-infinite-loop 
+- Problem
+    - Sau khi dùng refresh token để authenticate lại, vẫn k thể hiện tên user 
+    - Do ko nạp vào redux sau khi sd refresh token
