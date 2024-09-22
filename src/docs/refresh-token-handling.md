@@ -29,3 +29,12 @@
         - https://stackoverflow.com/questions/73363862/axios-retry-infinite-loop
         - Solution: đặt 1 flag --> đánh dấu đã retry rồi lần sau ko retry nữa 
         - `const NO_RETRY_HEADER = 'x-no-retry'`
+
+# Fix issue Refresh Token expired
+- Tái hiện
+    - Call /admin
+    - F5 (/refresh) --> statusCode: 400, message: `Không tồn tại refresh_token ở cookies`
+    - update .env: `JWT_REFRESH_EXPIRE_IN=10s`
+- Fix
+    - Redirect `/login`
+    - axios customize
