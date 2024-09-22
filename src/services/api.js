@@ -25,8 +25,14 @@ const callFetchAccount = () => {
     return axios.get(URL_BACKEND);
 }
 
+const callLogout = () => {
+    const URL_BACKEND = "/api/v1/auth/logout";
+    return axios.post(URL_BACKEND);
+}
+
 export {
     callRegister,
     callLogin,
     callFetchAccount,
+    callLogout,
 }
